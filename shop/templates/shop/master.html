@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ademic Shop</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'shop/styles/screen.css' %}">
+</head>
+<body>
+    <div id="header">
+        <img class="logo" src="{% static 'shop/images/ademic.png' %}" alt="">
+        <form method="get" action="{% url 'index' %}" class="search">
+            <input type="text" name="q" value="{{ filter }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div id="categories">
+        <ul>
+            <li><a href="{% url 'index' %}">All</a></li>
+            {% for category in categories %}
+            <li>
+                <a href="{% url 'categories' category.id %}">
+                    {{ category.name }}
+                    {% for count in category_counts %}
+                        {% if count.category_name == category.name %}
+                            ({{ count.count }})
+                        {% endif %}
+                    {% endfor %}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <h1>{{ title }}</h1>
+    {% block main %} 
+    
+    {% endblock %}
+</body>
+</html>
